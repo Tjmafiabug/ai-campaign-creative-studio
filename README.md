@@ -309,6 +309,39 @@ stated rather than hidden, and is the first thing to address in production.
 
 ---
 
+## What went wrong while building this
+
+Sixteen incidents are documented in [`NOTES.md`](NOTES.md) with symptom,
+diagnosis, root cause, fix and verification output. Three worth reading:
+
+**The model fabricated statistics while citing real sources.** Copy read
+*"25.6% of exercisers are active at 6:30 a.m."* with three real URLs attached.
+Re-fetching those pages and grepping for each figure showed `48%` present
+verbatim and `25.6%`, `6:30 a.m.` and `62%` present in none of them. The existing
+guard verified that *a source was real*, never that *the claim came from it*.
+Fixed with `_unsupported_numbers()`, which compares every figure in generated
+copy against numbers actually present in retrieved text.
+
+**The video passed every automated check and was still wrong.** Exit code 0,
+`ffprobe` clean at `h264, 1080x1920, 240 frames, 8.000000s`. The headline was on
+screen from frame one. Diagnosed by measuring bright pixels per frame: the
+"clean" opening frame scored 56,963 against the headline frame's 57,016 — it was
+not clean. The stage was loading the finished ad and overlaying on top of it.
+
+**My own cost estimates were 7x too low.** Computed from OpenRouter's published
+`completion` price; measuring a real call with `usage: {include: true}` showed
+image tokens bill at roughly $30/M rather than the listed $1.50/M. Cost is now
+read from the provider's reported figure, and partial totals report `null`
+rather than a number that looks complete.
+
+**The pattern across four of them:** a guard applied to one path while its
+siblings went unguarded — citations vs claims, what the agent could *do* vs
+recording that an attempt *happened*, one prompt field vs its two siblings. The
+fix each time was to apply the check where every caller routes through, which is
+why `orchestrator.run_stage` is the single entry point for stage execution.
+
+---
+
 ## AI-assisted development
 
 This project was built with Claude Code (Opus 5) in an interactive session.
