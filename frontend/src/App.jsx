@@ -7,6 +7,36 @@ import "./App.css";
 // Deliberately one screen with sections rather than a router — there is only
 // ever one campaign in view, and "a polished dashboard is not required".
 
+// Inline SVG rather than an icon package: the design reference is explicit that
+// emoji must not be used as structural icons, and four inline paths do not
+// justify a dependency.
+const Icon = {
+  spark: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
+      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
+    </svg>
+  ),
+  download: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
+      <path d="M12 3v12M7 11l5 5 5-5M4 20h16" />
+    </svg>
+  ),
+  retry: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
+      <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" />
+    </svg>
+  ),
+  empty: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
+      <path d="M4 7h16v13H4zM4 7l2-3h12l2 3M9 12h6" />
+    </svg>
+  ),
+};
+
 const STAGES = ["research", "spec", "images", "video"];
 
 const STAGE_LABELS = {
@@ -58,7 +88,7 @@ function BriefForm({ onSubmit, busy }) {
 
   return (
     <form className="card" onSubmit={submit}>
-      <h2>1 · Product brief</h2>
+      <h2><span className="step">1</span> Product brief</h2>
 
       <label>
         Product name
@@ -202,7 +232,7 @@ function AnglePicker({ campaign, onSelect, busy }) {
 
   return (
     <div className="card">
-      <h2>2 · Choose a creative angle</h2>
+      <h2><span className="step">2</span> Choose a creative angle</h2>
 
       {gapNote && <p className="warn">{gapNote}</p>}
       <ResearchTrace research={research} />
@@ -264,7 +294,7 @@ function StageList({ campaign, onRetry }) {
           state.status
         );
         return (
-          <div key={stage} className="stage">
+          <div key={stage} className={`stage stage--${state.status}`}>
             <div className="stage__head">
               <strong>{STAGE_LABELS[stage]}</strong>
               <StatusPill status={state.status} />
@@ -274,8 +304,13 @@ function StageList({ campaign, onRetry }) {
             )}
             {state.error && <div className="error small">{state.error}</div>}
             {canRetry && (
-              <button className="link" onClick={() => onRetry(stage)}>
-                Retry this stage
+              <button
+                className="ghost"
+                onClick={() => onRetry(stage)}
+                aria-label={`Retry the ${STAGE_LABELS[stage]} stage`}
+              >
+                <Icon.retry width="13" height="13" />
+                Retry
               </button>
             )}
           </div>
@@ -293,7 +328,7 @@ function Assets({ campaign }) {
 
   return (
     <div className="card">
-      <h2>3 · Generated assets</h2>
+      <h2><span className="step">3</span> Generated assets</h2>
 
       <div className="assets">
         {["image_1x1", "image_9x16"].map(
@@ -310,8 +345,9 @@ function Assets({ campaign }) {
                     href={api.assetUrl(campaign.id, kind)}
                     download
                     className="link"
+                    aria-label={`Download the ${kind} creative`}
                   >
-                    Download
+                    <Icon.download width="13" height="13" /> Download
                   </a>
                 </figcaption>
               </figure>
@@ -332,8 +368,9 @@ function Assets({ campaign }) {
                 href={api.assetUrl(campaign.id, "video")}
                 download
                 className="link"
+                aria-label="Download the campaign video"
               >
-                Download
+                <Icon.download width="13" height="13" /> Download
               </a>
             </figcaption>
           </figure>
@@ -461,9 +498,19 @@ export default function App() {
   return (
     <main>
       <header>
-        <h1>AI Campaign Creative Studio</h1>
+        <div className="brand">
+          <span className="brand__mark">
+            <Icon.spark width="18" height="18" style={{ color: "#fff" }} />
+          </span>
+          <div>
+            <h1>Campaign Creative Studio</h1>
+            <p className="brand__sub">
+              Research-grounded ad concepts, rendered in two formats and a video
+            </p>
+          </div>
+        </div>
         {health?.fixture_mode && (
-          <p className="warn">
+          <p className="warn banner banner--warn" role="status">
             FIXTURE MODE — all provider calls are mocked. Research shown is
             canned data, not live browsing.
           </p>
@@ -475,7 +522,11 @@ export default function App() {
         )}
       </header>
 
-      {error && <p className="error banner">{error}</p>}
+      {error && (
+        <p className="error banner" role="alert">
+          {error}
+        </p>
+      )}
 
       {!campaignId && <BriefForm onSubmit={createCampaign} busy={busy} />}
 
@@ -494,6 +545,18 @@ export default function App() {
 
           <Assets campaign={campaign} />
         </>
+      )}
+
+      {!campaignId && history.length === 0 && (
+        <div className="card">
+          <div className="empty">
+            <Icon.empty width="34" height="34" className="muted" />
+            <p>
+              No campaigns yet. Fill in the brief above to research angles and
+              generate a campaign.
+            </p>
+          </div>
+        </div>
       )}
 
       {history.length > 0 && (
