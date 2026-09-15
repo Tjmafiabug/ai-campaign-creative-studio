@@ -187,7 +187,7 @@ def retry_stage(
     # An audit fired 5 simultaneous retries and got 5x 200 "retry_started" while
     # only 1 attempt was recorded: the data was safe, but four clients were told
     # their work had started when it had been silently dropped. Claiming here
-    # means the winner gets 202 and every loser gets an honest 409.
+    # means only the winner gets 200 and every loser gets an honest 409.
     if not store.claim_stage(campaign_id, stage):
         raise HTTPException(
             409,
