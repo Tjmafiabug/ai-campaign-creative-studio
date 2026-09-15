@@ -76,9 +76,6 @@ class ProductBrief(BaseModel):
     # asset the user owns — the model must not invent one.
     tagline: str | None = Field(default=None, max_length=60)
 
-    # Optional reference packshot, stored as a path on disk (not raw bytes).
-    reference_image_path: str | None = None
-
     @field_validator("verified_claims")
     @classmethod
     def _claims_not_empty(cls, v: list[str]) -> list[str]:
@@ -260,21 +257,3 @@ class Asset(BaseModel):
     duration_seconds: float | None = None
     generation_prompt: str
     created_at: datetime = Field(default_factory=utcnow)
-
-
-class UsageRecord(BaseModel):
-    """Model/provider usage for the bounds + cost reporting requirement.
-
-    Cost is labelled an estimate because providers do not always return billing
-    data; unknowns are reported as unknown rather than guessed.
-    """
-
-    stage: StageName
-    provider: str
-    model: str
-    calls: int = 0
-    prompt_tokens: int | None = None
-    completion_tokens: int | None = None
-    images_generated: int = 0
-    estimated_cost_usd: float | None = None
-    cost_is_estimate: bool = True

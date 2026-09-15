@@ -7,7 +7,6 @@ pydantic==2.13.0          # stage contracts (models.py) — validation + seriali
 httpx==0.28.1             # HTTP client for OpenRouter and Tavily
 python-dotenv==1.2.2      # load .env so secrets stay out of code and out of Git
 pillow==12.2.0            # deterministic text overlays + exact-size crops for exports
-python-multipart==0.0.21  # multipart parsing, required for the optional packshot upload
 
 # Test-only
 pytest==9.0.1

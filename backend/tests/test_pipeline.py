@@ -597,3 +597,40 @@ def test_agent_rejects_actions_outside_the_whitelist():
         json.dumps({"action": "web_search", "arguments": {"query": "x"}, "decision": "d"})
     )
     assert parsed["action"] == "web_search"
+
+
+def test_image_prompt_does_not_both_ban_and_request_the_brand_name():
+    """The scene keeps the brand name; only invented lettering is stripped.
+
+    An earlier version replaced the brand with "the product" and appended a
+    blanket no-text clause, while `_master_prompt` separately asked for the
+    brand on the label — so one prompt carried both instructions at once, and
+    the scene description was degraded to "the product tub" on the way.
+    """
+    from app.images import _master_prompt
+    from app.spec import _strip_text_cues
+
+    scene = (
+        "The BeastLife Whey Core tub on a concrete gym floor in morning light, "
+        "with a 'MAX GAINS' banner on the wall behind it."
+    )
+    cleaned, flags = _strip_text_cues(scene)
+
+    # The brand survives; the invented banner copy does not.
+    assert "BeastLife Whey Core" in cleaned
+    assert "MAX GAINS" not in cleaned
+    assert "the product tub" not in cleaned
+
+    spec = CreativeSpec(
+        spec_id="t", version=1, angle_id="a", hook="h", headline="H",
+        body_copy="b", call_to_action="Go", product_identity="A matte black tub",
+        scene_description=cleaned, palette=["#111111", "#F5F5F3", "#D8FF3E"],
+        composition_notes="Space reserved up top", video_outline="v",
+        brand_name="BeastLife Whey Core", text_cues_removed=flags,
+    )
+    prompt = _master_prompt(spec)
+
+    # The brand is requested exactly once, on the label — and the only no-text
+    # rule in the prompt is the one that carves it out.
+    assert "BEASTLIFE WHEY CORE" in prompt
+    assert "no other text" in _strip_text_cues("a sans-serif logo")[0].lower()

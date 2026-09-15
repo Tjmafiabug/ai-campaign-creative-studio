@@ -315,6 +315,13 @@ a:hover {
   text-decoration: underline;
 }
 
+.form__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+
 /* --- pipeline ----------------------------------------------------------- */
 
 .stages {
@@ -658,17 +665,6 @@ figcaption {
   background: var(--warn-dim);
   border-color: rgba(245, 165, 36, 0.3);
   color: var(--warn);
-}
-
-.empty {
-  text-align: center;
-  padding: var(--s7) var(--s4);
-  color: var(--fg-muted);
-}
-
-.empty p {
-  margin: var(--s3) 0 0;
-  font-size: 14px;
 }
 
 /* --- motion ------------------------------------------------------------- */

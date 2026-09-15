@@ -71,11 +71,6 @@ SEARCH_TIMEOUT_SECONDS = _int("SEARCH_TIMEOUT_SECONDS", 30)
 # so automatic retries only need to absorb brief blips.
 MAX_PROVIDER_RETRIES = _int("MAX_PROVIDER_RETRIES", 2)
 
-# --- Upload limits --------------------------------------------------------
-# The assignment asks for "a reasonable limit on uploaded file type/size".
-MAX_UPLOAD_BYTES = _int("MAX_UPLOAD_BYTES", 5 * 1024 * 1024)  # 5 MB
-ALLOWED_UPLOAD_TYPES = {"image/png", "image/jpeg", "image/webp"}
-
 # --- Export targets (fixed by the assignment) -----------------------------
 SQUARE_SIZE = (1080, 1080)
 VERTICAL_SIZE = (1080, 1920)

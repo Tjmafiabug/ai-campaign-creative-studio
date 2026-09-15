@@ -29,12 +29,6 @@ const Icon = {
       <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" />
     </svg>
   ),
-  empty: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"
-      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
-      <path d="M4 7h16v13H4zM4 7l2-3h12l2 3M9 12h6" />
-    </svg>
-  ),
 };
 
 const STAGES = ["research", "spec", "images", "video"];
@@ -583,18 +577,6 @@ export default function App() {
 
           <Assets campaign={campaign} />
         </>
-      )}
-
-      {!campaignId && history.length === 0 && (
-        <div className="card">
-          <div className="empty">
-            <Icon.empty width="34" height="34" className="muted" />
-            <p>
-              No campaigns yet. Fill in the brief above to research angles and
-              generate a campaign.
-            </p>
-          </div>
-        </div>
       )}
 
       {history.length > 0 && (

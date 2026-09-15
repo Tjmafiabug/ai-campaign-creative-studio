@@ -466,9 +466,10 @@ Stated plainly rather than implied:
   It is not the security boundary — the action whitelist is. Detection exists for
   observability.
 - **No deployment.** The app runs locally; there is no hosted URL.
-- **Uploaded packshots are accepted and stored but not yet fed into the image
-  prompt** — the endpoint, validation, and size/type limits exist; the wiring
-  into generation does not.
+- **No reference packshot input.** Every scene is generated from the spec's text
+  description. Feeding a real product photo in as an image input would pin the
+  product's true appearance rather than the model's interpretation of it; the
+  hook for that does not exist.
 
 ---
 

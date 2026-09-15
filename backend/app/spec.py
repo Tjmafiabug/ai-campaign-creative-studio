@@ -154,20 +154,10 @@ _NO_PEOPLE_CLAUSE = (
 # that the image model could not spell. Re-tested against the current model:
 # 3/3 generations rendered "BEASTLIFE" and "BEASTLIFE WHEY CORE" correctly, so
 # the blanket ban was costing a real brand asset for no reason.
-_NO_TEXT_CLAUSE = (
+_NO_OTHER_TEXT_CLAUSE = (
     " Apart from the brand name on the product label, render no other text, "
     "words, letters, numbers, logos, or typography anywhere in the image."
 )
-
-# Generic product words that commonly appear in a brand name but are also
-# legitimate scene vocabulary. Stripping these would damage the description:
-# "Whey protein powder in a shaker" must not become "the product protein powder".
-_GENERIC_PRODUCT_WORDS = {
-    "whey", "protein", "core", "powder", "shake", "blend", "nutrition", "pro",
-    "max", "plus", "original", "classic", "gold", "premium", "fuel", "energy",
-    "drink", "bar", "mix", "supplement", "formula", "advanced", "daily",
-}
-
 
 def _truncate_words(text: str, limit: int) -> str:
     """Trim to `limit` characters without cutting a word in half.
@@ -183,70 +173,41 @@ def _truncate_words(text: str, limit: int) -> str:
     return cut or text[:limit]
 
 
-def _is_brand_token(token: str) -> bool:
-    """Is this word distinctive enough to be a brand name worth removing?
-
-    A brand token is a long-enough word that is not generic product vocabulary.
-    "BeastLife" qualifies; "Whey" and "Core" do not, even though both appear in
-    "BeastLife Whey Core".
-    """
-    return len(token) >= 4 and token.lower() not in _GENERIC_PRODUCT_WORDS
-
-
-def _strip_text_cues(value: str, product_name: str) -> tuple[str, list[str]]:
+def _strip_text_cues(value: str) -> tuple[str, list[str]]:
     """Remove text-rendering cues from any string bound for an image prompt.
 
-    Two problems this solves, both found in a live run:
+    Catches typography vocabulary ("sans-serif", "label reading", "lettering")
+    in every field that reaches the image prompt, not just `scene_description` —
+    a live run put "sans-serif typography" in `product_identity`, which was not
+    being checked at the time.
 
-    1. The model described the product as having "sans-serif typography" and
-       "label elements" in `product_identity` — a field that was not being
-       checked, only `scene_description` was. Any field that reaches the image
-       prompt needs the same treatment, so this is applied to all of them.
-    2. The scene named the product by brand ("The BeastLife Whey Core tub"),
-       which invites the image model to render that brand name as label text.
-       The brand name is replaced with a generic noun.
+    The brand name is deliberately NOT removed. An earlier version replaced it
+    with "the product", on the assumption that naming the brand would make the
+    model letter it onto the label badly. That assumption no longer holds: the
+    model spells the brand correctly (3/3 on re-test), and `_master_prompt` now
+    asks for it on the label explicitly. Stripping it here meant the prompt
+    simultaneously said "render no letters anywhere" and "put BEASTLIFE on the
+    label" — while degrading the scene description to "the product tub" on the
+    way. The substitution and its cleanup passes are gone with it.
 
-    Returns the cleaned string and the list of cues that were found, so the
-    substitution is observable rather than silent.
+    Returns the cleaned string and the cues that were found, so the change is
+    observable rather than silent.
     """
     flags = _TEXT_IN_SCENE_RE.findall(value)
 
-    cleaned = value
-    if product_name:
-        # Replace the full product name first, then any remaining significant
-        # word from it. A live run produced "BeastLife branding appears as a
-        # bold sans-serif mark" — the model used the bare brand token, not the
-        # full product name, so replacing only the exact string left it in the
-        # image prompt and invited the model to letter it onto the label.
-        cleaned = re.sub(re.escape(product_name), "the product", cleaned, flags=re.I)
-
-        for token in product_name.split():
-            if not _is_brand_token(token):
-                continue
-            if re.search(rf"\b{re.escape(token)}\b", cleaned, re.I):
-                flags.append(token)
-                cleaned = re.sub(
-                    rf"\b{re.escape(token)}\b", "the product", cleaned, flags=re.I
-                )
-
-    # Remove quoted strings entirely rather than substituting inside them. A
-    # live run produced: "a bold white 'the product' logo and 'Whey Core'
-    # sub-branding" — the brand substitution had run *inside* the quotes, so the
-    # prompt was literally asking the model to print the words "the product" on
-    # the label. Any quoted fragment in a product description is lettering.
-    cleaned = re.sub(r"['‘’\"“”][^'‘’\"“”]{1,40}['‘’\"“”]", "", cleaned)
+    # Quoted fragments are lettering the model is being asked to render — e.g.
+    # "a bold white 'Whey Core' sub-branding". The brand name on the label is
+    # requested separately and deliberately in _master_prompt; anything else
+    # quoted here is invented packaging copy and comes out misspelled.
+    cleaned = re.sub(r"['‘’\"“”][^'‘’\"“”]{1,40}['‘’\"“”]", "", value)
 
     if _PEOPLE_RE.search(cleaned):
         flags.append("people")
         cleaned = cleaned.rstrip(". ") + "." + _NO_PEOPLE_CLAUSE
 
     if flags:
-        cleaned = cleaned.rstrip(". ") + "." + _NO_TEXT_CLAUSE
+        cleaned = cleaned.rstrip(". ") + "." + _NO_OTHER_TEXT_CLAUSE
 
-    # Substituting "the product" for a brand name leaves doubled articles like
-    # "shaking the the product bottle", which reached a live image prompt.
-    cleaned = re.sub(r"\b(the|a|an)\s+the product\b", "the product", cleaned, flags=re.I)
-    cleaned = re.sub(r"\bthe product\s+the product\b", "the product", cleaned, flags=re.I)
     cleaned = re.sub(r"\s{2,}", " ", cleaned).strip()
 
     return cleaned, sorted(set(f.lower() for f in flags))
@@ -309,7 +270,7 @@ def build_spec(
     # Every field that reaches an image prompt gets the same sanitising pass.
     # The prompt already asks for no text; this enforces it rather than trusting
     # it, and records what was found.
-    scene, scene_flags = _strip_text_cues(scene, brief.product_name)
+    scene, scene_flags = _strip_text_cues(scene)
 
     # Enforce single-frame composition. The prompt asks for it; this checks it.
     # A live run returned "A high-contrast split-screen composition. Left side:
@@ -320,12 +281,10 @@ def build_spec(
         scene = scene.rstrip(". ") + "." + _SINGLE_FRAME_CLAUSE
 
     identity = str(data.get("product_identity", "")).strip() or brief.product_name
-    identity, identity_flags = _strip_text_cues(identity, brief.product_name)
+    identity, identity_flags = _strip_text_cues(identity)
 
     composition = str(data.get("composition_notes", "")).strip()
-    composition, composition_flags = _strip_text_cues(
-        composition, brief.product_name
-    )
+    composition, composition_flags = _strip_text_cues(composition)
     text_cue_flags = sorted(set(scene_flags + identity_flags + composition_flags))
 
     # Truncate rather than reject: an over-long headline is a formatting problem,

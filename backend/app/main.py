@@ -18,12 +18,11 @@ restart sweep marks interrupted stages and the user retries them.
 
 from __future__ import annotations
 
-import hashlib
 import mimetypes
 from pathlib import Path
 from typing import Any
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, UploadFile, File
+from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
@@ -231,43 +230,6 @@ def get_asset(campaign_id: str, kind: str) -> FileResponse:
 
     media_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
     return FileResponse(path, media_type=media_type, filename=path.name)
-
-
-@app.post("/api/uploads/packshot")
-async def upload_packshot(file: UploadFile = File(...)) -> dict[str, Any]:
-    """Accept an optional reference product image.
-
-    Bounded on both type and size, per the assignment's requirement for "a
-    reasonable limit on uploaded file type/size". The size check reads the file
-    rather than trusting the client-supplied content-length header.
-    """
-    if file.content_type not in config.ALLOWED_UPLOAD_TYPES:
-        raise HTTPException(
-            415,
-            f"Unsupported type {file.content_type!r}. "
-            f"Allowed: {sorted(config.ALLOWED_UPLOAD_TYPES)}",
-        )
-
-    data = await file.read(config.MAX_UPLOAD_BYTES + 1)
-    if len(data) > config.MAX_UPLOAD_BYTES:
-        raise HTTPException(
-            413,
-            f"File exceeds the {config.MAX_UPLOAD_BYTES // (1024 * 1024)} MB limit",
-        )
-
-    uploads = store.DATA_DIR / "uploads"
-    uploads.mkdir(parents=True, exist_ok=True)
-    suffix = Path(file.filename or "packshot.png").suffix[:8] or ".png"
-    # Content hash, not `hash()`: Python's builtin is salted per process, so the
-    # same file uploaded after a restart would land under a different name.
-    digest = hashlib.sha256(data).hexdigest()[:16]
-    target = uploads / f"{digest}{suffix}"
-    target.write_bytes(data)
-
-    # Return only the stored filename. The absolute path leaked the server's
-    # directory layout and OS username, and the client cannot use it anyway —
-    # the reference is resolved server-side against the uploads directory.
-    return {"reference": target.name, "bytes": len(data)}
 
 
 # ---------------------------------------------------------------------------
