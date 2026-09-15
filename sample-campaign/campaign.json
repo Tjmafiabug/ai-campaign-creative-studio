@@ -1,5 +1,5 @@
 {
-  "campaign_id": "0a661ce1e696",
+  "campaign_id": "30faf91ffc75",
   "brief": {
     "product_name": "BeastLife Whey Core",
     "description": "A whey protein powder that mixes in water without a blender, made for people who train before work and commute straight after.",
@@ -7,24 +7,22 @@
     "objective": "Introduce the product to a new audience",
     "tone": "Practical and energetic",
     "call_to_action": "Explore the range",
+    "tagline": "Fuel the grind.",
     "verified_claims": [
       "24g protein per serving",
       "Mixes in water without a blender",
       "No added sugar"
-    ],
-    "tagline": "Fuel the grind.",
-    "reference_image_path": null
+    ]
   },
-  "selected_angle": "angle_1",
   "research": {
     "angles": [
       {
         "id": "angle_1",
-        "title": "The Commute-Proof Routine",
-        "audience_insight": "Salaried employees in Indian metros face long working weeks (average of 49.6 hours) and commute challenges that make time-efficiency critical for gym-goers.",
-        "hook": "Master your morning rush with 24g of protein\u2014no blender required.",
-        "visual_direction": "A split-screen shot: on the left, a person quickly shaking a bottle of BeastLife in a gym locker room; on the right, the same person confidently walking through a bustling, modern Indian metro station with a laptop bag.",
-        "rationale": "Focuses on the practical pain point of limited time and the need for seamless transitions between the gym and the office, highlighting the product's convenience.",
+        "title": "The Seamless Morning Transition",
+        "audience_insight": "Urban professionals face significant commute-related stress and long work hours, making efficiency in their morning gym-to-work transition essential.",
+        "hook": "Your morning workout shouldn't be a logistical challenge. BeastLife Whey Core mixes in water without a blender so you can fuel up and head straight to the office.",
+        "visual_direction": "A split-screen shot: on the left, a person finishing a gym session; on the right, the same person standing at a busy metro station or in an office lobby, calmly drinking a smooth protein shake from a shaker bottle.",
+        "rationale": "Focuses on the practical pain point of Indian urban commutes and the time-saving benefit of the product.",
         "source_urls": [
           "https://www.shrm.org/in/topics-tools/news/blogs/long-commutes-impact-on-mental-health",
           "https://unleashdstrength.com/fitness/how-to-fit-gym-visits-into-your-commute"
@@ -34,28 +32,28 @@
       },
       {
         "id": "angle_2",
-        "title": "Fueling the Modern Wellness Lifestyle",
-        "audience_insight": "The Indian fitness market is shifting toward a holistic lifestyle economy where consumers prioritize balanced routines that integrate physical training with mental clarity.",
-        "hook": "Clean energy for your body and mind. 24g of protein, zero sugar, total convenience.",
-        "visual_direction": "A calm, bright shot of a person in a minimalist gym space, finishing a morning workout. They are holding a bottle of BeastLife, looking composed and alert, with a yoga mat rolled up nearby to signify a holistic approach.",
-        "rationale": "Aligns the product with the emerging trend of holistic wellness and the desire for mental clarity, positioning protein as a tool for a balanced lifestyle.",
+        "title": "Precision Fuel for the Balanced Professional",
+        "audience_insight": "Urban professionals are increasingly health-conscious, utilizing physiological data to guide their fitness, yet they often struggle with meeting daily protein requirements.",
+        "hook": "Upgrade your recovery metrics with 24g protein per serving. No added sugar, no blender needed\u2014just pure fuel for your busy day.",
+        "visual_direction": "A close-up of a wearable fitness tracker showing heart rate metrics next to a clean, minimalist workspace with a single, perfectly mixed bottle of BeastLife Whey Core.",
+        "rationale": "Appeals to the data-driven mindset of modern gym-goers who prioritize recovery and performance tracking.",
         "source_urls": [
-          "https://www.obesityaction.org/resources/embracing-the-future",
-          "https://www.healthandfitness.org/indias-fitness-market-set-to-double-by-2030"
+          "https://acsm.org/education-resources/trending-topics-resources/acsm-fitness-trends",
+          "https://www.researchandmarkets.com/reports/6027613/india-whey-protein-market-region-competition"
         ],
         "unsupported_numbers": [],
         "thin_sourcing": false
       },
       {
         "id": "angle_3",
-        "title": "Efficiency for the Urban Athlete",
-        "audience_insight": "Gym-based workouts are the dominant fitness category in India, but commuting issues like poor transit connectivity create 'friction' that requires smarter, more flexible gear.",
-        "hook": "No blender? No problem. Get your 24g of protein instantly, anywhere your commute takes you.",
-        "visual_direction": "A close-up of the BeastLife powder being poured into a water bottle and shaken effortlessly in a car or a waiting area. The setting reflects the urban reality of busy professionals needing high-performance nutrition without the bulk of equipment.",
-        "rationale": "Directly addresses the 'no blender' feature as a solution to the lack of infrastructure and the high-friction nature of urban commuting in India.",
+        "title": "Mindful Strength, Modern Energy",
+        "audience_insight": "There is a growing emphasis on holistic wellness where physical training is balanced with mental clarity, and urban professionals are looking for high-quality nutrition to support this lifestyle.",
+        "hook": "From your morning mindful movement to your first meeting, power your day with 24g protein per serving. No blender, no sugar\u2014just clean, energetic fuel.",
+        "visual_direction": "A person in comfortable activewear standing in a bright, sunlit room after a morning yoga or gym session, smiling while holding a clear shaker bottle containing a smooth liquid.",
+        "rationale": "Connects the trend of holistic, mindful fitness with the need for high-quality, convenient nutritional supplementation.",
         "source_urls": [
-          "https://www.kenresearch.com/industry-reports/india-fitness-market",
-          "https://www.tandfonline.com/doi/full/10.1080/29941849.2025.2507758"
+          "https://www.obesityaction.org/resources/embracing-the-future",
+          "https://www.researchandmarkets.com/reports/6027613/india-whey-protein-market-region-competition"
         ],
         "unsupported_numbers": [],
         "thin_sourcing": false
@@ -63,39 +61,57 @@
     ],
     "sources": [
       {
-        "title": "Embracing the Future: Top 10 Fitness Trends of 2024",
+        "title": "Embracing the Future: Top 10 Fitness Trends of 2024 - Obesity Action Coalition",
         "url": "https://www.obesityaction.org/resources/embracing-the-future",
-        "accessed_at": "2026-09-15T11:05:47.933747Z",
+        "accessed_at": "2026-09-15T12:34:29.585216Z",
         "excerpt": "In 2024, there\u2019s a big emphasis on holistic wellness and the connection between the mind and body. Activities like yoga, meditation and tai chi are combined with high-intensity workouts to create a balanced fitness routine. These workouts include mindful movement and breathing exercises, which don\u2019t just help physically but also bring mental clarity and calmness to reduce stress. In recent years, fitness professionals have paid more attention to the mind-body connection when helping people with [...] 9.) Recovery-focused Fitness\n\nThere is a growing understanding in 2024 of how important recovery is to overall fitness. That\u2019s why there\u2019s a big increase in recovery-focused activities. Special recovery centers are popping up that offer treatments like cryotherapy and compression therapy. People are using tools at home like message devices and foam rollers to recover after workouts. By focusing on recovery, individuals can perform better and reduce the risk of injuries.\n\n10.) Wellness Travel [...] Group fitness takes on a new form in 2024 by blending the energy of in-person classes with the flexibility of virtual connections. Hybrid group fitness classes let people join from different "
       },
       {
-        "title": "India's Fitness Market Set to Double by 2030",
-        "url": "https://www.healthandfitness.org/indias-fitness-market-set-to-double-by-2030",
-        "accessed_at": "2026-09-15T11:05:47.934062Z",
-        "excerpt": "Skip to content\n\nhealth & fitness association\n\nHFA Account Login)\n\nhealth & fitness association\n\n# India\u2019s Fitness Market Set to Double by 2030\n\nArticle\n\nIndia\u2019s fitness economy is emerging as one of the world\u2019s fastest-growing markets, with revenue expected to more than double from INR16,200 crore (US$1.9 billion) in 2024 to INR37,700 crore (US$4.5 billion) by 2030. [...] The report notes that fitness in India is evolving beyond gym-based workouts into a lifestyle economy that fuels allied sectors such as real estate, activewear, nutrition, wellness tourism, and digital platforms.\n\nWith rising disposable incomes and a health-conscious youth population, the industry is expected to play a central role in India\u2019s wellness journey as the world\u2019s most populous country advances toward its US$5 trillion economic goal. [...] Market concentration: The top 10 cities\u2014including Mumbai, Delhi NCR and Bengaluru\u2014account for 56% of industry revenue but only 31% of facilities."
+        "title": "ACSM publishes its 2024 Worldwide Survey of Fitness Trends",
+        "url": "https://www.healthclubmanagement.co.uk/health-club-management-news/ACSM-unveils-its-2024-Worldwide-Survey-of-Fitness-Trends/352394",
+        "accessed_at": "2026-09-15T12:34:29.585598Z",
+        "excerpt": "9. Youth athletic development: it\u2019s easier to learn and develop skills when young \u2013 which is the basis of the recently launched Physical Literacy Consensus Statement for England \u2013 as well as a rise in training facilities and programmes aimed at young people in the US. ACSM recommends exercise professionals considering speciality training to work with this population. [...] 9. Youth athletic development: it\u2019s easier to learn and develop skills when young \u2013 which is the basis of the recently launched Physical Literacy Consensus Statement for England \u2013 as well as a rise in training facilities and programmes aimed at young people in the US. ACSM recommends exercise professionals considering speciality training to work with this population. [...] 6. Employing Certified Exercise Professionals is a consistent top 10 trend and reflects the increasing professionalisation of the industry with health and fitness providers hiring trained professionals to lead fitness programmes.\n\n7. Mobile exercise apps are in the top ten for the first time. This trend reflects the proliferation of smart phone apps now available to support individuals in their training programmes, to track progress, acquire sk"
       },
       {
-        "title": "India Fitness Market Share, Companies & Trends Report ...",
-        "url": "https://www.kenresearch.com/industry-reports/india-fitness-market",
-        "accessed_at": "2026-09-15T11:05:47.934299Z",
-        "excerpt": "Author(s):Samanyu\n\nProduct Code:KROD293\n\nJune 2024\n\n100\n\nTable of Content\n\n## About the Report\n\n### India Fitness Market Overview\n\nIndia Fitness Market Size \n\nIndia Fitness Market Size \n\n### India Fitness Current Market Analysis\n\n### India Fitness Market Segmentation\n\nThe India Fitness Market can be segmented based on several factors: [...] By Product Type: India fitness market segmentation by product type is divided into gym & fitness centers, home fitness equipment, fitness apps and others. The market is dominated by gyms and fitness centers. This dominance is fueled by the increasing popularity of group workouts and wellness programs, especially in urban areas.\n\nThese facilities attract a diverse clientele seeking structured, professional guidance and social interaction, driving significant market value."
+        "title": "ACSM Fitness Trends",
+        "url": "https://acsm.org/education-resources/trending-topics-resources/acsm-fitness-trends",
+        "accessed_at": "2026-09-15T12:34:29.585953Z",
+        "excerpt": "This trend includes the use of real-time physiological data to individualize training, monitor recovery, and support long-term health. The emphasis is on how metrics such as heart rate variability (HRV), VO\u2082 max, sleep quality, and glucose levels are interpreted and applied to guide decisions. These insights allow professionals to adapt exercise programs based on metabolic and nervous system responses. In 2024, more than 70% of wearable users reported applying their output data to inform [...] This category includes programs designed to improve core stability, muscular endurance, mobility, coordination, and motor control through disciplines such as yoga, Pilates, and barre. Participation in yoga, Pilates, and mobility-focused classes rose by 27% between 2022 and 2024, driven largely by suburban boutique studios. As fitness and wellness sectors continue to converge, this trend has emerged as a foundational element of balanced programming that supports both physical function and [...] Mobile Exercise Apps are digital platforms that deliver on-demand, scheduled, live-streamed, or recorded workouts, offering users convenience and flexibility to exercise anytime, anywhere. In 2024, more"
       },
       {
-        "title": "Full article: Understanding women's needs, challenges, ...",
+        "title": "Protein | Workforce Health Index",
+        "url": "https://whi.loophealth.com/5-pillars-of-health/food-and-nutrition/protein",
+        "accessed_at": "2026-09-15T12:34:33.061033Z",
+        "excerpt": "Among professionals, 10.3% (353 people) use plant protein supplements. While our dataset does not capture motivations directly, global and Indian market studies show that younger, urban professionals\u2014especially in tech\u2014tend to adopt plant protein for environmental and ethical reasons.\n\nIn India, this aligns with the demographic where plant protein is most visible: younger urban workers exploring sustainable alternatives alongside traditional protein sources. [...] Dal, chana, and rajma remain the backbone of protein in the Indian diet.\n\nAmong urban professionals, 82% consume dal regularly, making it the country\u2019s most successful protein intervention. It cuts across dietary preferences, income levels, and regions, providing a common foundation of protein for four out of five working Indians.\n\n#### Universally Adopted [...] Widespread gap: 73% of urban Indians are protein-deficient despite diverse food availability.\n Dal dominance: 82% consume dal, but it cannot meet protein needs on its own.\n Limited supplementation: Only 11.8% use whey protein, showing awareness is limited to a minority.\n Gender divide: Men dominate supplement use (2.8:1) due to gym culture, while women rely more o"
+      },
+      {
+        "title": "India Whey Protein Market, By Region, Competition, Forecast and Opportunities, 2020-2030F",
+        "url": "https://www.researchandmarkets.com/reports/6027613/india-whey-protein-market-region-competition",
+        "accessed_at": "2026-09-15T12:34:33.061677Z",
+        "excerpt": "For example, many urban professionals include whey protein in their morning smoothies or post-workout shakes to meet daily protein requirements, contributing to the sustained growth of this market. India faces a significant issue of protein deficiency, with a large portion of the population not meeting the recommended daily intake of protein. This problem is particularly acute among vegetarians, who form a significant part of India\u2019s demographic, as they often struggle to get enough protein [...] Urban consumers in India are increasingly shifting towards protein-enriched diets due to a growing understanding of the importance of balanced nutrition, particularly for those engaged in fitness or trying to maintain a healthy lifestyle. With urbanization comes access to a broader range of nutritional products and greater exposure to Western dietary habits, which include protein supplementation as a standard health practice. Urban lifestyles are often fast paced, leaving little time for meal [...] North India emerged as the dominant in the India Whey Protein market in 2024, holding the largest market share in terms of value. In North India, especially in key metropolitan areas like Delhi-"
+      },
+      {
+        "title": "Protein supplement consumption prevalence, habits and complications in adolescents | Anales de Pediatr\u00eda",
+        "url": "https://www.analesdepediatria.org/en-protein-supplement-consumption-prevalence-habits-articulo-S234128792300220X",
+        "accessed_at": "2026-09-15T12:34:33.062206Z",
+        "excerpt": "lower income were associated with an increased probability of having relatives and friends as sources of information.13 In our study we also found differences, although not significant, and while consumers of protein supplements mainly obtained information from health professionals (39.13%), consumers of nonprotein supplements obtained information chiefly from the internet. [...] Another important variable in our study was who monitored the consumption of the supplements, as lack of guidance and monitoring can cause problems, among others, in association with poor body image.4 In our study, most participants controlled their own use of supplements, which was consistent with the findings of a study by Tsarouhas et al., in which none of the adolescents had consulted with a physician or nutritionist.20 Health care professionals must increase their knowledge on the [...] protein supplement consumers, their use was monitored by a professional (physician, coach/trainer or nutritionist), compared to 7.38% of consumers of nonprotein supplements."
+      },
+      {
+        "title": "Understanding women\u2019s needs, challenges, and expectations from urban transport in India: a focus group discussion approach",
         "url": "https://www.tandfonline.com/doi/full/10.1080/29941849.2025.2507758",
-        "accessed_at": "2026-09-15T11:05:51.584130Z",
-        "excerpt": "For activities like yoga or gym, seven participants chose to walk, thanks to the neighborhood\u2019s walkability; none cycled or used buses for personal trips. Buses were least preferred due to poor connectivity, low frequency, and unreliable real-time information, leading to long waits and travel anxiety, which was clearly stated by one of the participants: \u2018_The bus connectivity is poor. I take Volvo buses to go to my sister\u2019s place in Bannerghatta. Those buses are comfortable. But the Volvo bus [...] Insights from FGDs indicate that unless policies are aligned with women\u2019s needs, adoption of public transport by women commuters across groups will be a big challenge. Politicians often prioritize visible \u2018symbols of development\u2019 like metros (Kakar et al., Citation 2021), while practical issues such as last-mile connectivity and poor station amenities remain unaddressed. For instance, marginalised (low income) groups are the captive riders of PT due to its affordability, while students belongs [...] The travel patterns of White-collar women appeared complex, as they often combined multiple activities between work and home. To enhance efficiency and save time, personal car is preferred. O"
+        "accessed_at": "2026-09-15T12:34:37.738111Z",
+        "excerpt": "For activities like yoga or gym, seven participants chose to walk, thanks to the neighborhood\u2019s walkability; none cycled or used buses for personal trips. Buses were least preferred due to poor connectivity, low frequency, and unreliable real-time information, leading to long waits and travel anxiety, which was clearly stated by one of the participants: \u2018_The bus connectivity is poor. I take Volvo buses to go to my sister\u2019s place in Bannerghatta. Those buses are comfortable. But the Volvo bus [...] Insights from FGDs indicate that unless policies are aligned with women\u2019s needs, adoption of public transport by women commuters across groups will be a big challenge. Politicians often prioritize visible \u2018symbols of development\u2019 like metros (Kakar et al., Citation 2021), while practical issues such as last-mile connectivity and poor station amenities remain unaddressed. For instance, marginalised (low income) groups are the captive riders of PT due to its affordability, while students belongs [...] In addition to choosing shorter commutes over higher salaries, marginalized women were also found to compromise their health. One participant, echoing the experiences of others, shared: \u2018_Sin"
       },
       {
-        "title": "The Impact of Long Commutes on Employee Mental Health ...",
+        "title": "The Impact of Long Commutes on Employee Mental Health in Indian Cities",
         "url": "https://www.shrm.org/in/topics-tools/news/blogs/long-commutes-impact-on-mental-health",
-        "accessed_at": "2026-09-15T11:05:51.584584Z",
-        "excerpt": "SHRM Advisor\n\nIn India\u2019s busy urban centers, long commute times pose a significant challenge for employees. The annual PLFS report indicates that salaried employees in India worked an average of 49.6 hours in a week, longer than the mandated 48 hours (Government of India, n.d.). Add to this the time taken to commute to and from the office, and the situation becomes even more challenging for the working class. [...] ## Conclusion\n\nThere is a direct relationship between long commutes and employee mental health in Indian cities, where traffic congestion is commonplace. The negative outcomes associated with this challenge require proactive interventions.\n\nOrganizations should acknowledge this as a key issue and make strategic interventions to improve employee well-being.\n\nReferences"
+        "accessed_at": "2026-09-15T12:34:37.738659Z",
+        "excerpt": "SHRM Advisor\n\nIn India\u2019s busy urban centers, long commute times pose a significant challenge for employees. The annual PLFS report indicates that salaried employees in India worked an average of 49.6 hours in a week, longer than the mandated 48 hours (Government of India, n.d.). Add to this the time taken to commute to and from the office, and the situation becomes even more challenging for the working class. [...] ## Conclusion\n\nThere is a direct relationship between long commutes and employee mental health in Indian cities, where traffic congestion is commonplace. The negative outcomes associated with this challenge require proactive interventions.\n\nOrganizations should acknowledge this as a key issue and make strategic interventions to improve employee well-being.\n\nReferences [...] 4. Invest in Employee Well-being: The stress associated with the commute is not left behind on the road. Employees continue to remain stressed and suffer within the workplace. To mitigate these adverse effects, organizations can provide supportive amenities like on-site fitness centers and relaxation spaces."
       },
       {
         "title": "How to Fit Gym Visits Into Your Commute",
         "url": "https://unleashdstrength.com/fitness/how-to-fit-gym-visits-into-your-commute",
-        "accessed_at": "2026-09-15T11:05:51.585118Z",
+        "accessed_at": "2026-09-15T12:34:37.739266Z",
         "excerpt": "Location relative to transit. The gym should be on your walking path, not a detour from it.\n 24-hour access. Shift schedules, late meetings, and early mornings all demand flexibility. 24-hour gym access is the single biggest advantage for commuters who cannot predict their exact schedule. Unleash\u2019d Strength Gym operates around the clock for exactly this reason. [...] Pro Tip: Visit your top two or three gym candidates on a Tuesday or Wednesday during the exact time you plan to train. Those are the most representative days for crowding and commute friction.\n\n## Planning and scheduling gym visits around your commute\n\nA gym visit without a fixed time on your calendar is a wish, not a plan. The most consistent gym-goers treat their workout slot the same way they treat a work meeting: it has a start time, and it does not move. [...] Showers and lockers. A gym without showers forces you to choose between working out and arriving at the office presentable. Showers are non-negotiable for commuters.\n Real-world crowding. Visit the gym during your actual workout window before signing a membership. A gym that looks great on a Saturday afternoon may have a 20-minute wait for squat racks at 7:0"
       }
     ],
@@ -107,9 +123,9 @@
           "query": "fitness trends among young professionals in Indian metros 2024"
         },
         "result_summary": "3 results for 'fitness trends among young professionals in Indian metros 2024'",
-        "decision": "I need to understand the lifestyle and fitness habits of the target demographic in Indian cities to tailor the campaign effectively.",
-        "started_at": "2026-09-15T11:05:47.934969Z",
-        "duration_ms": 2314,
+        "decision": "I am starting by identifying the lifestyle and fitness habits of the target demographic in Indian metros to understand their morning routines.",
+        "started_at": "2026-09-15T12:34:29.586140Z",
+        "duration_ms": 2051,
         "error": null,
         "injection_flags": []
       },
@@ -117,84 +133,97 @@
         "step": 2,
         "tool": "web_search",
         "arguments": {
+          "query": "protein supplement consumption habits among Indian urban professionals"
+        },
+        "result_summary": "3 results for 'protein supplement consumption habits among Indian urban professionals'",
+        "decision": "I need to shift focus to the Indian market specifically, as the previous results were global and not focused on the target demographic's nutritional habits.",
+        "started_at": "2026-09-15T12:34:33.062452Z",
+        "duration_ms": 1879,
+        "error": null,
+        "injection_flags": []
+      },
+      {
+        "step": 3,
+        "tool": "web_search",
+        "arguments": {
           "query": "challenges of early morning gym goers in Indian metros commute"
         },
         "result_summary": "3 results for 'challenges of early morning gym goers in Indian metros commute'",
-        "decision": "I need to specifically investigate the pain points of the early morning gym-to-work transition for the target demographic to support the 'practical' tone of the campaign.",
-        "started_at": "2026-09-15T11:05:51.585339Z",
-        "duration_ms": 2188,
+        "decision": "I need to understand the specific pain points of the morning gym-to-work routine in Indian cities to tailor the 'practical and energetic' tone effectively.",
+        "started_at": "2026-09-15T12:34:37.739495Z",
+        "duration_ms": 2664,
         "error": null,
         "injection_flags": []
       }
     ],
     "source_gap_note": null
   },
+  "selected_angle": "angle_1",
   "creative_spec": {
-    "spec_id": "1a9063f5e441",
+    "spec_id": "5b847d9c9666",
     "version": 1,
     "angle_id": "angle_1",
-    "hook": "Master your morning rush with 24g of protein\u2014no blender required.",
-    "headline": "Master Your Morning Rush",
-    "body_copy": "Get 24g of protein with zero prep. No blender needed\u2014just shake and go for your busiest days.",
+    "hook": "Your morning workout shouldn't be a logistical challenge. BeastLife Whey Core mixes in water without a blender so you ca",
+    "headline": "Fuel Your Transition, Effortlessly.",
+    "body_copy": "With 24g of protein and no added sugar, BeastLife Whey Core mixes perfectly in water. No blender needed\u2014just fuel up and go.",
     "call_to_action": "Explore the range",
-    "product_identity": "A sleek, matte-black shaker bottle featuring the product logo in bold, metallic white typography. The container is partially filled with a light-colored, fine-powdered whey mix, clearly visible through a translucent section of the bottle. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.",
-    "scene_description": "A high-angle, clean shot on a polished dark grey gym locker bench. the product shaker bottle sits prominently in the center, surrounded by a neatly folded grey microfiber towel, a high-end leather laptop bag, and a pair of modern wireless earbuds. The scene is illuminated by cool, crisp, pre-dawn light streaming in from a nearby window, casting soft shadows. The background features the blurred, clean lines of a modern locker room interior, emphasizing a professional, efficient environment. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.",
+    "product_identity": "A sleek, matte-black 1kg tub of BeastLife Whey Core with a minimalist white label featuring the brand logo in bold, sans-serif typography. The finish is professional, clean, and premium. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.",
+    "scene_description": "A high-angle, single-frame shot on a polished metal gym locker bench. The BeastLife Whey Core tub sits next to a half-filled, transparent shaker bottle containing a smooth, clump-free protein shake. Beside them lies a neatly folded dark grey gym towel and a modern smartphone showing a transit map. The scene is illuminated by cool, crisp pre-dawn blue light streaming in from a nearby window, casting long, soft shadows. The atmosphere is quiet, orderly, and focused, capturing the moment of preparation before the morning commute.",
     "palette": [
       "#1A1A1A",
-      "#FFFFFF",
+      "#E0E0E0",
       "#4A90E2",
-      "#E0E0E0"
+      "#F5F5F5"
     ],
-    "composition_notes": "The shaker bottle is placed slightly off-center to the right. The left two-thirds of the frame are kept clean and uncluttered to provide a negative space buffer for the headline and CTA text to be overlaid without obstruction. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.",
-    "video_outline": "A slow, cinematic camera pan across the gym bench, starting from the laptop bag and moving toward the BeastLife shaker bottle. The lighting shifts subtly from the cool blue of pre-dawn to a slightly warmer, energetic morning glow as the camera settles on the product.",
+    "composition_notes": "The product and shaker bottle are positioned in the bottom-right quadrant. The top-left and center-left areas of the frame are kept clear of clutter, providing negative space for the headline and CTA overlays to ensure high legibility against the blurred locker room background. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.",
+    "video_outline": "A 5-second cinematic slow-motion pan starting from the textured surface of the gym bench, moving past the folded towel, and settling on the BeastLife Whey Core tub and shaker bottle. The lighting shifts subtly from a cool morning blue to a warmer, productive office-ready glow.",
     "brand_name": "BeastLife Whey Core",
     "tagline": "Fuel the grind.",
     "text_cues_removed": [
-      "beastlife",
       "headline",
       "logo",
       "people",
-      "text",
+      "sans-serif",
       "typography"
     ],
-    "created_at": "2026-09-15T11:06:28.850781Z"
+    "created_at": "2026-09-15T12:34:54.393611Z"
   },
   "assets": [
     {
-      "asset_id": "0a661ce1e696_master",
+      "asset_id": "30faf91ffc75_master",
       "kind": "master",
       "width": 1376,
       "height": 768,
       "duration_seconds": null,
-      "generation_prompt": "Professional advertising product photography, 16:9 landscape.\n\nSCENE: A high-angle, clean shot on a polished dark grey gym locker bench. the product shaker bottle sits prominently in the center, surrounded by a neatly folded grey microfiber towel, a high-end leather laptop bag, and a pair of modern wireless earbuds. The scene is illuminated by cool, crisp, pre-dawn light streaming in from a nearby window, casting soft shadows. The background features the blurred, clean lines of a modern locker room interior, emphasizing a professional, efficient environment. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\n\nPRODUCT (must appear exactly as described): A sleek, matte-black shaker bottle featuring the product logo in bold, metallic white typography. The container is partially filled with a light-colored, fine-powdered whey mix, clearly visible through a translucent section of the bottle. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\n\nBRANDING: the product label carries the brand name \"BEASTLIFE WHEY CORE\" in bold sans-serif\ncapitals, correctly spelled, clean and centred on the label. This is the ONLY\ntext permitted anywhere in the image.\n\nPALETTE: the overall colour grade should read as #1A1A1A, #FFFFFF, #4A90E2, #E0E0E0 \u2014\napply these as lighting and material colours within the scene. Do NOT draw\ncolour swatches, chips, bars, or a palette strip anywhere in the frame.\n\nCOMPOSITION: The shaker bottle is placed slightly off-center to the right. The left two-thirds of the frame are kept clean and uncluttered to provide a negative space buffer for the headline and CTA text to be overlaid without obstruction. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\n\nNO PEOPLE anywhere in the frame \u2014 no person, model, hand, arm, face, or\nsilhouette, in focus or blurred. This is a product photograph.\n\nONE single photograph from one camera at one moment. Not a split screen, not a\ndiptych, not a collage, not a grid \u2014 no panels, dividers, or colour swatches.\n\nPhotorealistic, commercial advertising quality, sharp focus on the product.\nNo text anywhere except the brand name on the product label.",
-      "created_at": "2026-09-15T11:06:31.914706Z"
+      "generation_prompt": "Professional advertising product photography, 16:9 landscape.\n\nSCENE: A high-angle, single-frame shot on a polished metal gym locker bench. The BeastLife Whey Core tub sits next to a half-filled, transparent shaker bottle containing a smooth, clump-free protein shake. Beside them lies a neatly folded dark grey gym towel and a modern smartphone showing a transit map. The scene is illuminated by cool, crisp pre-dawn blue light streaming in from a nearby window, casting long, soft shadows. The atmosphere is quiet, orderly, and focused, capturing the moment of preparation before the morning commute.\n\nPRODUCT (must appear exactly as described): A sleek, matte-black 1kg tub of BeastLife Whey Core with a minimalist white label featuring the brand logo in bold, sans-serif typography. The finish is professional, clean, and premium. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\n\nBRANDING: the product label carries the brand name \"BEASTLIFE WHEY CORE\" in bold sans-serif\ncapitals, correctly spelled, clean and centred on the label. This is the ONLY\ntext permitted anywhere in the image.\n\nPALETTE: the overall colour grade should read as #1A1A1A, #E0E0E0, #4A90E2, #F5F5F5 \u2014\napply these as lighting and material colours within the scene. Do NOT draw\ncolour swatches, chips, bars, or a palette strip anywhere in the frame.\n\nCOMPOSITION: The product and shaker bottle are positioned in the bottom-right quadrant. The top-left and center-left areas of the frame are kept clear of clutter, providing negative space for the headline and CTA overlays to ensure high legibility against the blurred locker room background. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\n\nNO PEOPLE anywhere in the frame \u2014 no person, model, hand, arm, face, or\nsilhouette, in focus or blurred. This is a product photograph.\n\nONE single photograph from one camera at one moment. Not a split screen, not a\ndiptych, not a collage, not a grid \u2014 no panels, dividers, or colour swatches.\n\nPhotorealistic, commercial advertising quality, sharp focus on the product.\nNo text anywhere except the brand name on the product label.",
+      "created_at": "2026-09-15T12:34:57.488281Z"
     },
     {
-      "asset_id": "0a661ce1e696_image_1x1",
+      "asset_id": "30faf91ffc75_image_1x1",
       "kind": "image_1x1",
       "width": 1080,
       "height": 1080,
       "duration_seconds": null,
-      "generation_prompt": "Recompose this exact photograph into a 1:1 square format.\n\nCRITICAL: keep the identical product, the identical scene, the identical\nlighting and the identical colour palette. This must read as the same\nphotograph reframed, not as a new photograph. Do not change the product's\nshape, colour, or finish.\n\nThe product must remain exactly: A sleek, matte-black shaker bottle featuring the product logo in bold, metallic white typography. The container is partially filled with a light-colored, fine-powdered whey mix, clearly visible through a translucent section of the bottle. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\nThe product label must still read \"BEASTLIFE WHEY CORE\", correctly spelled and unchanged.\nThe colour grade must remain: #1A1A1A, #FFFFFF, #4A90E2, #E0E0E0 \u2014 as lighting and\nmaterials only, never as swatches or colour bars in the frame.\n\nExtend the surroundings naturally to fill the new aspect ratio \u2014 add more\nceiling, floor, wall or background, but do NOT push the subject or the product\nout of frame to make room.\n\nFRAMING RULES:\n- NO PEOPLE: no person, hand, arm, face, or silhouette may appear.\n- The product must stay clearly visible and must not be covered by anything.\n- The upper area should read as calm background \u2014 achieved by extending the\n  scene, not by shrinking or displacing the subject.\n\nNo text anywhere except the brand name on the product label.",
-      "created_at": "2026-09-15T11:06:38.634277Z"
+      "generation_prompt": "Recompose this exact photograph into a 1:1 square format.\n\nCRITICAL: keep the identical product, the identical scene, the identical\nlighting and the identical colour palette. This must read as the same\nphotograph reframed, not as a new photograph. Do not change the product's\nshape, colour, or finish.\n\nThe product must remain exactly: A sleek, matte-black 1kg tub of BeastLife Whey Core with a minimalist white label featuring the brand logo in bold, sans-serif typography. The finish is professional, clean, and premium. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\nThe product label must still read \"BEASTLIFE WHEY CORE\", correctly spelled and unchanged.\nThe colour grade must remain: #1A1A1A, #E0E0E0, #4A90E2, #F5F5F5 \u2014 as lighting and\nmaterials only, never as swatches or colour bars in the frame.\n\nExtend the surroundings naturally to fill the new aspect ratio \u2014 add more\nceiling, floor, wall or background, but do NOT push the subject or the product\nout of frame to make room.\n\nFRAMING RULES:\n- NO PEOPLE: no person, hand, arm, face, or silhouette may appear.\n- The product must stay clearly visible and must not be covered by anything.\n- The upper area should read as calm background \u2014 achieved by extending the\n  scene, not by shrinking or displacing the subject.\n\nNo text anywhere except the brand name on the product label.",
+      "created_at": "2026-09-15T12:35:06.465572Z"
     },
     {
-      "asset_id": "0a661ce1e696_image_9x16",
+      "asset_id": "30faf91ffc75_image_9x16",
       "kind": "image_9x16",
       "width": 1080,
       "height": 1920,
       "duration_seconds": null,
-      "generation_prompt": "Recompose this exact photograph into a 9:16 vertical portrait format.\n\nCRITICAL: keep the identical product, the identical scene, the identical\nlighting and the identical colour palette. This must read as the same\nphotograph reframed, not as a new photograph. Do not change the product's\nshape, colour, or finish.\n\nThe product must remain exactly: A sleek, matte-black shaker bottle featuring the product logo in bold, metallic white typography. The container is partially filled with a light-colored, fine-powdered whey mix, clearly visible through a translucent section of the bottle. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\nThe product label must still read \"BEASTLIFE WHEY CORE\", correctly spelled and unchanged.\nThe colour grade must remain: #1A1A1A, #FFFFFF, #4A90E2, #E0E0E0 \u2014 as lighting and\nmaterials only, never as swatches or colour bars in the frame.\n\nExtend the surroundings naturally to fill the new aspect ratio \u2014 add more\nceiling, floor, wall or background, but do NOT push the subject or the product\nout of frame to make room.\n\nFRAMING RULES:\n- NO PEOPLE: no person, hand, arm, face, or silhouette may appear.\n- The product must stay clearly visible and must not be covered by anything.\n- The upper area should read as calm background \u2014 achieved by extending the\n  scene, not by shrinking or displacing the subject.\n\nNo text anywhere except the brand name on the product label.",
-      "created_at": "2026-09-15T11:06:43.806503Z"
+      "generation_prompt": "Recompose this exact photograph into a 9:16 vertical portrait format.\n\nCRITICAL: keep the identical product, the identical scene, the identical\nlighting and the identical colour palette. This must read as the same\nphotograph reframed, not as a new photograph. Do not change the product's\nshape, colour, or finish.\n\nThe product must remain exactly: A sleek, matte-black 1kg tub of BeastLife Whey Core with a minimalist white label featuring the brand logo in bold, sans-serif typography. The finish is professional, clean, and premium. NO PEOPLE: no person, model, hand, arm, face, silhouette, or human figure anywhere in the frame, in focus or blurred. This is a product photograph. Apart from the brand name on the product label, render no other text, words, letters, numbers, logos, or typography anywhere in the image.\nThe product label must still read \"BEASTLIFE WHEY CORE\", correctly spelled and unchanged.\nThe colour grade must remain: #1A1A1A, #E0E0E0, #4A90E2, #F5F5F5 \u2014 as lighting and\nmaterials only, never as swatches or colour bars in the frame.\n\nExtend the surroundings naturally to fill the new aspect ratio \u2014 add more\nceiling, floor, wall or background, but do NOT push the subject or the product\nout of frame to make room.\n\nFRAMING RULES:\n- NO PEOPLE: no person, hand, arm, face, or silhouette may appear.\n- The product must stay clearly visible and must not be covered by anything.\n- The upper area should read as calm background \u2014 achieved by extending the\n  scene, not by shrinking or displacing the subject.\n\nNo text anywhere except the brand name on the product label.",
+      "created_at": "2026-09-15T12:35:11.538447Z"
     },
     {
-      "asset_id": "0a661ce1e696_video",
+      "asset_id": "30faf91ffc75_video",
       "kind": "video",
       "width": 1080,
       "height": 1920,
       "duration_seconds": 8.0,
-      "generation_prompt": "FFmpeg render from approved 9:16 asset. Outline: A slow, cinematic camera pan across the gym bench, starting from the laptop bag and moving toward the BeastLife shaker bottle. The lighting shifts subtly from the cool blue of pre-dawn to a slightly warmer, energetic morning glow as the camera settles on the product.",
-      "created_at": "2026-09-15T11:09:12.958599Z"
+      "generation_prompt": "FFmpeg render from approved 9:16 asset. Outline: A 5-second cinematic slow-motion pan starting from the textured surface of the gym bench, moving past the folded towel, and settling on the BeastLife Whey Core tub and shaker bottle. The lighting shifts subtly from a cool morning blue to a warmer, productive office-ready glow.",
+      "created_at": "2026-09-15T12:35:21.243271Z"
     }
   ],
   "usage": [
@@ -202,11 +231,11 @@
       "stage": "research",
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-lite",
-      "calls": 4,
-      "prompt_tokens": 6882,
-      "completion_tokens": 991,
+      "calls": 5,
+      "prompt_tokens": 8415,
+      "completion_tokens": 838,
       "images_generated": 0,
-      "cost_usd": 0.003207,
+      "cost_usd": 0.003361,
       "cost_is_reported": true
     },
     {
@@ -214,10 +243,10 @@
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-lite",
       "calls": 1,
-      "prompt_tokens": 954,
-      "completion_tokens": 369,
+      "prompt_tokens": 961,
+      "completion_tokens": 401,
       "images_generated": 0,
-      "cost_usd": 0.000792,
+      "cost_usd": 0.000842,
       "cost_is_reported": true
     },
     {
@@ -225,10 +254,10 @@
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-lite-image",
       "calls": 3,
-      "prompt_tokens": 3500,
+      "prompt_tokens": 3560,
       "completion_tokens": 3360,
       "images_generated": 3,
-      "cost_usd": 0.101675,
+      "cost_usd": 0.10169,
       "cost_is_reported": true
     }
   ]

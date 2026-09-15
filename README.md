@@ -110,7 +110,7 @@ standard library — a reviewer can run it immediately after cloning. Exit code 
 0 only if every check passes.
 
 ```
-  PASS  source links: at least 3 pages cited            6 source URLs (minimum 3)
+  PASS  source links: at least 3 pages cited            9 source URLs (minimum 3)
   PASS  image_1x1: exactly 1080x1080                    1080x1080
   PASS  image_9x16: exactly 1080x1920                   1080x1920
   PASS  video: 6-10 seconds                             8.00s
@@ -213,7 +213,7 @@ The research agent has exactly two:
 Plus `finish()`. `_ALLOWED_ACTIONS` is a hard whitelist: the model can emit
 nothing else.
 
-**Bounds** (all configurable in `.env`): 5 searches, 5 page reads, 8 total steps,
+**Bounds** (all configurable in `.env`): 5 searches, 5 page reads, 6 total steps,
 180s per stage, 2 provider retries.
 
 ### Recovery and retry
@@ -545,11 +545,11 @@ recorded in the committed sample campaign, which
 
 | Stage | Cost |
 |---|---|
-| Research (agent loop + angle synthesis) | $0.0032 |
+| Research (agent loop + angle synthesis) | $0.0034 |
 | Creative spec | $0.0008 |
 | Images (3 generations) | **$0.1017** |
 | Video (local FFmpeg) | $0.0000 |
-| **Total** | **$0.1057** |
+| **Total** | **$0.1059** |
 
 Images are ~96% of the total, and the text stages vary between runs — research
 costs more when the agent chooses to read a long page in full, so an earlier
@@ -609,12 +609,12 @@ Stated plainly rather than implied:
   description. Feeding a real product photo in as an image input would pin the
   product's true appearance rather than the model's interpretation of it; the
   hook for that does not exist.
-- **The committed sample campaign predates the latest prompt fix.** It was
-  generated against live providers before the brand-name handling in
-  `_strip_text_cues` was corrected, so its stored master prompt still reads
-  "the product shaker bottle" where current code would emit the brand name. The
-  artifacts are valid and `verify_campaign.py` passes against them; it is simply
-  output from the previous revision, not a regeneration.
+- **The image model occasionally invents small label text.** In the committed
+  sample the brand name renders correctly on the tub, but a stray glyph appears
+  beneath it (`1Vg` on the 9:16, `TAg` on the 1:1). The prompt asks for the
+  brand name and nothing else; the model adds incidental packaging marks anyway.
+  Headline, body copy and CTA are unaffected — those are drawn by Pillow, which
+  is exactly why they are.
 
 ---
 
