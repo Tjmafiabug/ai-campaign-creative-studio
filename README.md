@@ -534,6 +534,14 @@ not reveal:
 - **A video passed every automated check while showing the wrong creative** —
   the debugging example below.
 
+### Time spent
+
+**About 6 hours of hands-on work**, across two sessions in one day. That covers
+everything: building, debugging, testing, verification, this documentation and
+the demo recording. The calendar span is wider, partly because the sessions were
+separated and partly because several stages spend their time waiting on
+providers rather than on me.
+
 ---
 
 ## Evidence
