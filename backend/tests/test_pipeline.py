@@ -634,3 +634,59 @@ def test_image_prompt_does_not_both_ban_and_request_the_brand_name():
     # rule in the prompt is the one that carves it out.
     assert "BEASTLIFE WHEY CORE" in prompt
     assert "no other text" in _strip_text_cues("a sans-serif logo")[0].lower()
+
+
+def test_angle_synthesis_reasks_the_model_on_malformed_json(monkeypatch):
+    """One bad brace must not throw away a completed research run.
+
+    Observed live: the model closed a 900-character angles payload badly and the
+    whole research stage failed with a JSONDecodeError, so the retry re-ran every
+    search and fetch to reach a step that only needed to be asked again. The
+    agent loop already recovers from malformed output this way; this is the same
+    treatment for the synthesis call.
+    """
+    import json
+
+    from app.agent import _synthesise_angles
+    from app.models import ProductBrief, Source
+
+    good = json.dumps({
+        "angles": [
+            {
+                "id": f"angle_{i}",
+                "title": f"Angle {i}",
+                "audience_insight": "Traceable insight.",
+                "hook": "A hook.",
+                "visual_direction": "A scene.",
+                "rationale": "Why.",
+                "source_urls": ["https://example.com/a"],
+            }
+            for i in (1, 2, 3)
+        ]
+    })
+    # A truncated object: parseable braces, unparseable content.
+    replies = ['{"angles": [{"id": "angle_1", "title": "Broken"', good]
+    calls = []
+
+    def fake_chat(messages, **kwargs):
+        calls.append(messages)
+        return replies[len(calls) - 1], {"cost": 0.0}
+
+    monkeypatch.setattr("app.agent.providers.chat", fake_chat)
+
+    brief = ProductBrief(
+        product_name="BeastLife Whey Core",
+        description="A whey protein powder that mixes in water.",
+        target_audience="Gym-goers",
+        objective="Introduce the product",
+        tone="Practical",
+        call_to_action="Explore the range",
+    )
+    sources = [Source(title="A", url="https://example.com/a", excerpt="evidence")]
+
+    angles = _synthesise_angles(brief, sources, [{"role": "system", "content": "s"}])
+
+    assert len(angles) == 3
+    assert len(calls) == 2, "the model should have been re-asked exactly once"
+    # The retry must tell the model what was wrong, not just repeat the prompt.
+    assert "could not be parsed" in calls[1][-1]["content"]

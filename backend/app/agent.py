@@ -441,24 +441,53 @@ Respond with JSON only:
 "hook": "...", "visual_direction": "...", "rationale": "...",
 "source_urls": ["..."]}}, ...]}}"""
 
-    raw, _usage = providers.chat(
-        [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            *conversation[1:],
-            {"role": "user", "content": prompt},
-        ],
-        max_tokens=2500,
-        temperature=0.8,  # higher: this is the creative step
-    )
-    if usage_records is not None:
-        usage_records.append(_usage)
+    # Malformed output here is recoverable the same way it is inside the agent
+    # loop: tell the model what was wrong and ask again. Without this, one bad
+    # closing brace fails the whole research stage, and the retry re-runs every
+    # search and fetch to reach a step that only needed to be re-asked. Observed
+    # live: "JSONDecodeError: Expecting ',' delimiter: line 1 column 883" after a
+    # complete, successful research run.
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        *conversation[1:],
+        {"role": "user", "content": prompt},
+    ]
+    payload: dict[str, Any] | None = None
+    last_error = ""
+    for attempt in range(2):
+        raw, _usage = providers.chat(
+            messages,
+            max_tokens=2500,
+            temperature=0.8,  # higher: this is the creative step
+        )
+        if usage_records is not None:
+            usage_records.append(_usage)
 
-    text = raw.strip()
-    start, end = text.find("{"), text.rfind("}")
-    if start == -1 or end == -1:
-        raise RuntimeError(f"Angle synthesis returned no JSON: {raw[:200]!r}")
+        text = raw.strip()
+        start, end = text.find("{"), text.rfind("}")
+        if start == -1 or end == -1:
+            last_error = f"no JSON object in output: {raw[:200]!r}"
+        else:
+            try:
+                payload = json.loads(text[start : end + 1])
+                break
+            except json.JSONDecodeError as exc:
+                last_error = f"{type(exc).__name__}: {exc}"
 
-    payload = json.loads(text[start : end + 1])
+        if attempt == 0:
+            messages.append({"role": "assistant", "content": raw[:2000]})
+            messages.append(
+                {
+                    "role": "user",
+                    "content": f"That response could not be parsed ({last_error}). "
+                    "Respond again with the same three angles as a single valid "
+                    "JSON object and nothing else — no prose, no code fence.",
+                }
+            )
+
+    if payload is None:
+        raise RuntimeError(f"Angle synthesis returned unparseable JSON: {last_error}")
+
     raw_angles = payload.get("angles", [])
     if len(raw_angles) < 3:
         raise RuntimeError(f"Expected 3 angles, model returned {len(raw_angles)}")
