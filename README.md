@@ -61,6 +61,16 @@ npm install
 npm run dev              # http://localhost:5173
 ```
 
+### A finished campaign, without running anything
+
+[](sample-campaign/) holds one complete campaign generated
+against live providers: both image exports, the video, the master scene both
+images were edited from, and  with the full agent trace, every
+source with its access timestamp, all three angles, the creative spec, and the
+real per-stage cost.
+
+Read that first if you want to see the output without setting anything up.
+
 ### Fixture mode — run it with no API keys
 
 ```bash
@@ -69,7 +79,10 @@ FIXTURE_MODE=1 ./run.sh
 ```
 
 Every provider call is replaced with canned data. The full pipeline runs end to
-end, costs nothing, and makes no network requests. The UI displays a **FIXTURE
+end, costs nothing, and makes no network requests — orchestration, persistence,
+retry, cropping and the text overlays all execute for real. The generated
+*photographs* are placeholders, since there is no image model to call; see
+[](sample-campaign/) for what the same code produces live. The UI displays a **FIXTURE
 MODE** banner whenever this is on, and fixture research is never presented as
 live browsing.
 
