@@ -1,5 +1,5 @@
 # Backend dependencies — deliberately minimal.
-# Every entry is justified in NOTES.md "Decision 7 — dependency budget".
+# Every entry earns its place; see "Decisions" in the README.
 
 fastapi==0.128.8          # HTTP API + request validation via the Pydantic models
 uvicorn==0.40.0           # ASGI server to run FastAPI

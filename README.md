@@ -50,8 +50,9 @@ cd backend
 ./run.sh                 # creates the venv, installs deps, serves on :8000
 ```
 
-`run.sh` unsets `PYTHONPATH` before starting — see *Decision 7* in `NOTES.md`
-for why that matters.
+`run.sh` unsets `PYTHONPATH` before starting: a stray `PYTHONPATH` pointing at
+another project shadows the venv and produces import errors that look like a
+broken install.
 
 ### Start the frontend
 
@@ -63,11 +64,11 @@ npm run dev              # http://localhost:5173
 
 ### A finished campaign, without running anything
 
-[](sample-campaign/) holds one complete campaign generated
+[`sample-campaign/`](sample-campaign/) holds one complete campaign generated
 against live providers: both image exports, the video, the master scene both
-images were edited from, and  with the full agent trace, every
-source with its access timestamp, all three angles, the creative spec, and the
-real per-stage cost.
+images were edited from, and [`campaign.json`](sample-campaign/campaign.json)
+with the full agent trace, every source with its access timestamp, all three
+angles, the creative spec, and the real per-stage cost.
 
 Read that first if you want to see the output without setting anything up.
 
@@ -82,7 +83,7 @@ Every provider call is replaced with canned data. The full pipeline runs end to
 end, costs nothing, and makes no network requests — orchestration, persistence,
 retry, cropping and the text overlays all execute for real. The generated
 *photographs* are placeholders, since there is no image model to call; see
-[](sample-campaign/) for what the same code produces live. The UI displays a **FIXTURE
+[`sample-campaign/`](sample-campaign/) for what the same code produces live. The UI displays a **FIXTURE
 MODE** banner whenever this is on, and fixture research is never presented as
 live browsing.
 
@@ -241,8 +242,7 @@ Two guards on top:
 - Statistics that appear in no retrieved source are **flagged** on the angle card
   as `unsupported_numbers`, visible to the reviewer before approval. This exists
   because live testing caught the model emitting confident figures — `25.6%`,
-  `6:30 a.m.`, `62%` — that were in none of its sources. See *Finding #1* in
-  `NOTES.md`.
+  `6:30 a.m.`, `62%` — that were in none of its sources.
 
 ### How both images stay consistent
 
@@ -314,7 +314,8 @@ video's typography matches the image ads exactly, since it is the same code.
 ## Decisions
 
 Two meaningful technical choices, their alternatives, and what was accepted.
-Full reasoning for all 15 decisions is in [`NOTES.md`](NOTES.md).
+Eighteen decisions were recorded during the build; these are the two with the
+widest blast radius.
 
 ### 1. SQLite + FastAPI `BackgroundTasks`, not Postgres + Celery
 
@@ -356,8 +357,8 @@ stated rather than hidden, and is the first thing to address in production.
 
 ## What went wrong while building this
 
-Sixteen incidents are documented in [`NOTES.md`](NOTES.md) with symptom,
-diagnosis, root cause, fix and verification output. Three worth reading:
+Sixteen incidents were diagnosed and fixed during the build. Three worth
+reading, each with its symptom, root cause and verification:
 
 **The model fabricated statistics while citing real sources.** Copy read
 *"25.6% of exercisers are active at 6:30 a.m."* with three real URLs attached.
@@ -399,7 +400,51 @@ began, so a mistake in the data model surfaced before four stages depended on it
 **Context supplied:** the assignment PDF was re-read at each stage and its
 wording quoted directly into design decisions. Standing instructions were to
 prefer the simplest thing that works, to justify every dependency, and to record
-every decision and bug in `NOTES.md` as it happened.
+every decision and bug as it happened, which is what this README is drawn
+from.
+
+Two reusable rule sets were applied rather than re-typed each time. Both are
+Claude Code *skills* — short instruction files the agent loads on demand — and
+they live in my user config rather than this repo, so the operative excerpts are
+quoted here:
+
+*Simplicity rules, applied to every piece of code written:*
+
+> Stop at the first rung that holds: 1. Does this need to exist at all?
+> 2. Already in this codebase? 3. Stdlib does it? 4. Native platform feature?
+> 5. Already-installed dependency? 6. Can it be one line? 7. Only then: the
+> minimum code that works.
+>
+> No interface with one implementation, no factory for one product, no config
+> for a value that never changes. Mark deliberate simplifications with a
+> `ponytail:` comment naming the ceiling and the upgrade path.
+
+That last rule is visible in the source. `grep -rn "ponytail:" backend/` returns
+seven places where a shortcut was taken deliberately, each naming its ceiling
+and what would trigger an upgrade — optimistic locking via `UPDATE...WHERE`
+rather than a lock table, edge density rather than face detection for copy
+placement, an abandoned worker thread rather than a real cancellation protocol,
+and regex injection detection that is explicitly *not* the security boundary.
+
+*An over-engineering audit, run against the whole tree near the end:*
+
+> Scan the whole tree instead of a diff. Rank findings biggest cut first.
+> Tags: `delete:` dead code or speculative feature. `stdlib:` hand-rolled thing
+> the standard library ships. `yagni:` abstraction with one implementation.
+> `shrink:` same logic, fewer lines.
+
+That pass produced the commit `Cut what was not earning its place`: a dead
+Pydantic model nothing imported, a half-wired upload endpoint and the dependency
+that served it, and ~60 lines of brand-name stripping that had begun
+contradicting the image prompt — the sanitiser removed the brand and appended
+"render no text", while the master prompt two functions away asked for the brand
+on the label. Net −205 lines, one dependency.
+
+It also produced one finding I **rejected** on review: collapsing three stage
+exception classes into a plain `RuntimeError`. `run_from` catches `StageBlocked`
+specifically to distinguish a pipeline correctly *paused for user input* from a
+failure, so the "simplification" would have logged normal operation as an error.
+Worth recording that the audit is a source of candidates, not verdicts.
 
 **How output was reviewed:** nothing was accepted because it ran. Each stage was
 verified against its actual artifacts — generated images were opened and looked
@@ -408,16 +453,21 @@ the retrieved source text, and `pip list` was audited against
 `requirements.txt`. That review caught four real defects that passing code did
 not reveal:
 
-- the model fabricating statistics while citing real URLs (*Finding #1*)
-- a text sanitiser applied to one field while two sibling fields went unguarded
-  (*Finding #2*)
-- the recompose prompt silently ignoring the product identity — surfaced by an
-  unused-parameter lint hint (*Finding #3*)
-- a video that passed every automated check while showing the wrong creative
-  (*Finding #4*)
-
-`NOTES.md` records each with its symptom, diagnosis, root cause, fix, and
-verification output.
+- **The model fabricated statistics while citing real URLs.** Copy claimed
+  "25.6% of exercisers are active at 6:30am" with three genuine source links
+  attached. Re-fetching those pages and grepping for each figure showed one
+  number present verbatim and three appearing in none of the sources. The
+  existing guard checked that a *source was real*, never that the *claim came
+  from it*. Now `_unsupported_numbers` compares every figure in generated copy
+  against figures present in retrieved text and flags the rest to the reviewer
+  rather than deleting them silently.
+- **A text sanitiser guarded one field while two siblings went unguarded.** Only
+  `scene_description` was sanitised; `product_identity` and `composition_notes`
+  reached the image prompt raw, one of them carrying "sans-serif typography".
+- **The recompose prompt silently ignored the product identity** — surfaced by
+  an unused-parameter lint hint, not by a test.
+- **A video passed every automated check while showing the wrong creative** —
+  the debugging example below.
 
 ---
 
@@ -454,6 +504,31 @@ a re-extracted contact sheet confirmed the intended timeline — clean scene
 **The lesson:** "the process exited 0" is not "the feature works". Anything
 producing visual output needs verification that looks at the output.
 
+### An audit of the running application
+
+Separately, the finished app was driven, measured, and probed adversarially
+rather than read.
+
+**The floor, established first:** SQLite round-trip 0.62ms; `get_campaign`
+0.76ms — 1.2x the bare round-trip. That number reframes everything else: there
+is no slow query in this app, so any latency is HTTP, serialisation, or a
+provider call. Measuring the floor first is what stops you optimising a query
+that was never the problem.
+
+**Held up under probing:** path traversal (3 vectors) 404; SQL injection via URL
+and body (7 payloads) rejected with row counts unchanged; CORS from a foreign
+origin refused; endpoints 1.4–2.8ms median.
+
+**Three findings, fixed and verified:**
+
+| Finding | Evidence | Fix, verified |
+|---|---|---|
+| `record_usage` defined but never called — the `usage` table had 0 rows while the README claimed cost was recorded | `grep -rn "record_usage" app/` returned only the definition | `usage: {include: true}` on both provider calls, one aggregator every stage routes through. Real run now records `{"stage": "research", "calls": 4, "cost_usd": 0.003102, "cost_is_reported": true}` |
+| 5 concurrent retries all returned 200 while only 1 ran — data was safe, but four clients were told work had started when it was dropped | `[200, 200, 200, 200, 200]`, attempts recorded: 1 | Claim moved into the request handler. Now `[200, 409, 409, 409, 409]` — one winner, four honest rejections |
+| 1.2 MB transferred over a 60s stage to watch four strings change | Full campaign record polled every 1.5s: 12,716 B | `/status` endpoint returning stage statuses only: **273 B, a 47x reduction** |
+
+Regression tests were added for each, so none can silently return.
+
 ### Model and tool usage
 
 | Purpose | Model / service |
@@ -463,17 +538,25 @@ producing visual output needs verification that looks at the output.
 | Web search and page extraction | Tavily (free tier) |
 | Video encoding | FFmpeg 8.1.1 (local) |
 
-**Cost: $0.1376 per complete campaign**, measured from the provider's reported
-`usage.cost` rather than computed from list prices:
+**Cost: $0.11 per complete campaign**, measured from the provider's reported
+`usage.cost` rather than computed from list prices. These are the figures
+recorded in the committed sample campaign, which
+[`verify_campaign.py`](verify_campaign.py) reads back:
 
 | Stage | Cost |
 |---|---|
-| Research (agent loop + angle synthesis) | $0.0298 |
-| Creative spec | $0.0070 |
-| Images (3 generations) | **$0.1008** |
+| Research (agent loop + angle synthesis) | $0.0032 |
+| Creative spec | $0.0008 |
+| Images (3 generations) | **$0.1017** |
 | Video (local FFmpeg) | $0.0000 |
+| **Total** | **$0.1057** |
 
-Images are ~73% of the total. Both models were chosen by measurement: the agent
+Images are ~96% of the total, and the text stages vary between runs — research
+costs more when the agent chooses to read a long page in full, so an earlier
+measured run came to $0.138 with $0.030 of research. Image cost is the stable
+part and the part worth optimising.
+
+Both models were chosen by measurement: the agent
 model is 12x cheaper than Claude Sonnet with equal JSON reliability (3/3 clean
 actions) and lower latency, and the image model is half the price of
 `flash-image` while producing the better result in a side-by-side test.
@@ -483,6 +566,30 @@ bill at roughly $30/M, not the $1.50/M listed for text completion. Per-stage usa
 `cost_is_reported` marking whether every call in that stage returned its own
 billed figure. When any call does not, the total is reported as `null` rather
 than as a partial number presented as complete.
+
+### Research and documentation consulted
+
+The external sources that actually influenced the build, with what was taken
+from each:
+
+| Source | Used for | Outcome |
+|---|---|---|
+| OpenRouter live model list (`GET /api/v1/models`) | Verifying an image model supports image *input*, not just text-to-image | Confirmed `input_modalities: [image, text]` — this determined the consistency strategy |
+| [n8n — restricting the actions AI agents can take](https://blog.n8n.io/make-ai-agents-more-reliable-and-restrict-the-actions-they-can-take/) | Audit checklist for agent reliability controls | 5 of 6 already present; the gap (input scanning) became `detect_injection()`. n8n itself rejected as a dependency |
+| Tavily API | Search + page extraction | Adopted, over raw scraping — avoids an HTML-parsing dependency |
+| The assignment PDF | Primary specification | Re-read at each stage; quoted directly into design decisions |
+
+The two that changed the design:
+
+- **OpenRouter's live model list** (`GET /api/v1/models`), used to confirm that
+  the image model accepts `input_modalities: [image, text]` and can therefore
+  *edit* a supplied image rather than only generate from text. That single fact
+  determined the entire consistency strategy.
+- **[n8n on restricting agent actions](https://blog.n8n.io/make-ai-agents-more-reliable-and-restrict-the-actions-they-can-take/)**,
+  used as an audit checklist against the finished agent. Five of its six
+  controls were already present; the sixth (input scanning) became
+  `detect_injection()`. Reviewed *after* the agent was built, as a check for
+  blind spots rather than as the source of the design — worth stating plainly.
 
 ### Unfinished or unverified
 
@@ -502,6 +609,12 @@ Stated plainly rather than implied:
   description. Feeding a real product photo in as an image input would pin the
   product's true appearance rather than the model's interpretation of it; the
   hook for that does not exist.
+- **The committed sample campaign predates the latest prompt fix.** It was
+  generated against live providers before the brand-name handling in
+  `_strip_text_cues` was corrected, so its stored master prompt still reads
+  "the product shaker bottle" where current code would emit the brand name. The
+  artifacts are valid and `verify_campaign.py` passes against them; it is simply
+  output from the previous revision, not a regeneration.
 
 ---
 
@@ -509,8 +622,11 @@ Stated plainly rather than implied:
 
 - Secrets live in `.env`, which is git-ignored. `.env.example` documents what is
   needed without containing values.
-- Uploads are bounded to 5 MB and to PNG/JPEG/WebP, with the size checked by
-  reading the file rather than trusting the client's `content-length`.
+- There is no upload surface. An earlier build accepted a reference packshot
+  with type and size limits, but nothing downstream ever read the stored file,
+  so the endpoint and its dependency were removed rather than shipped
+  half-wired. The assignment's upload-limit requirement is conditional on
+  supporting uploads.
 - Asset downloads are path-checked against the artifact directory, so a
   malformed stored path cannot serve a file from elsewhere on disk.
 - CORS is restricted to localhost dev origins.
@@ -543,5 +659,5 @@ backend/
 frontend/
   src/App.jsx        the whole UI
   src/api.js         backend client
-NOTES.md             every decision and bug, with verification output
+verify_campaign.py   checks one campaign against the acceptance criteria
 ```
