@@ -156,7 +156,7 @@ than papered over by raising the timeout only for fixture runs.
 
 ```bash
 cd backend
-./run_tests.sh           # 28 tests, ~3s, no network calls
+./run_tests.sh           # 29 tests, ~3s, no network calls
 ```
 
 Covers the three areas the assignment names — input/schema validation, one
@@ -422,8 +422,9 @@ stated rather than hidden, and is the first thing to address in production.
 
 ## What went wrong while building this
 
-Sixteen incidents were diagnosed and fixed during the build. Three worth
-reading, each with its symptom, root cause and verification:
+Twenty-two incidents were diagnosed during the build — all fixed except two,
+which are documented instead and listed under *Unfinished or unverified*. Three
+worth reading, each with its symptom, root cause and verification:
 
 **The model fabricated statistics while citing real sources.** Copy read
 *"25.6% of exercisers are active at 6:30 a.m."* with three real URLs attached.
@@ -734,7 +735,7 @@ backend/
     orchestrator.py  stage running, dependencies, retry
     main.py          FastAPI endpoints
   assets/            bundled OFL fonts
-  tests/             28 tests
+  tests/             29 tests
 frontend/
   src/App.jsx        the whole UI
   src/api.js         backend client
