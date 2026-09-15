@@ -46,6 +46,19 @@ const STAGE_LABELS = {
   video: "Video",
 };
 
+const EMPTY_BRIEF = {
+  product_name: "",
+  description: "",
+  target_audience: "",
+  objective: "",
+  tone: "",
+  call_to_action: "",
+  tagline: "",
+  verified_claims: "",
+};
+
+// Kept as a one-click sample rather than pre-filling the form: a form that
+// arrives full hides whether the fields actually accept input.
 const EXAMPLE_BRIEF = {
   product_name: "BeastLife Whey Core",
   description:
@@ -55,7 +68,9 @@ const EXAMPLE_BRIEF = {
   objective: "Introduce the product to a new audience",
   tone: "Practical and energetic",
   call_to_action: "Explore the range",
-  verified_claims: "24g protein per serving\nMixes in water without a blender\nNo added sugar",
+  tagline: "Fuel the grind.",
+  verified_claims:
+    "24g protein per serving\nMixes in water without a blender\nNo added sugar",
 };
 
 function StatusPill({ status }) {
@@ -63,7 +78,7 @@ function StatusPill({ status }) {
 }
 
 function BriefForm({ onSubmit, busy }) {
-  const [form, setForm] = useState(EXAMPLE_BRIEF);
+  const [form, setForm] = useState(EMPTY_BRIEF);
   const [error, setError] = useState(null);
 
   const update = (field) => (event) =>
@@ -92,7 +107,10 @@ function BriefForm({ onSubmit, busy }) {
 
       <label>
         Product name
-        <input value={form.product_name} onChange={update("product_name")} required />
+        <input value={form.product_name}
+            onChange={update("product_name")}
+            placeholder="BeastLife Whey Core"
+            required />
       </label>
 
       <label>
@@ -101,6 +119,7 @@ function BriefForm({ onSubmit, busy }) {
           rows={3}
           value={form.description}
           onChange={update("description")}
+          placeholder="A whey protein powder that mixes in water without a blender..."
           required
         />
       </label>
@@ -111,25 +130,33 @@ function BriefForm({ onSubmit, busy }) {
           <input
             value={form.target_audience}
             onChange={update("target_audience")}
+            placeholder="Busy gym-goers aged 25-40 in Indian metros"
             required
           />
         </label>
         <label>
           Objective
-          <input value={form.objective} onChange={update("objective")} required />
+          <input value={form.objective}
+            onChange={update("objective")}
+            placeholder="Introduce the product to a new audience"
+            required />
         </label>
       </div>
 
       <div className="row">
         <label>
           Tone
-          <input value={form.tone} onChange={update("tone")} required />
+          <input value={form.tone}
+            onChange={update("tone")}
+            placeholder="Practical and energetic"
+            required />
         </label>
         <label>
           Call to action
           <input
             value={form.call_to_action}
             onChange={update("call_to_action")}
+            placeholder="Explore the range"
             required
           />
         </label>
@@ -154,6 +181,7 @@ function BriefForm({ onSubmit, busy }) {
           rows={3}
           value={form.verified_claims}
           onChange={update("verified_claims")}
+          placeholder={"24g protein per serving\nNo added sugar"}
         />
         <small>
           The only product facts the system may state. Nothing else is asserted
@@ -163,9 +191,19 @@ function BriefForm({ onSubmit, busy }) {
 
       {error && <p className="error">{error}</p>}
 
-      <button type="submit" disabled={busy}>
-        {busy ? "Starting research…" : "Start research"}
-      </button>
+      <div className="form__actions">
+        <button type="submit" disabled={busy}>
+          {busy ? "Starting research…" : "Start research"}
+        </button>
+        <button
+          type="button"
+          className="ghost"
+          onClick={() => setForm(EXAMPLE_BRIEF)}
+          disabled={busy}
+        >
+          Load sample brief
+        </button>
+      </div>
     </form>
   );
 }
