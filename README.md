@@ -1,19 +1,71 @@
-# AI Campaign Creative Studio
+<div align="center">
 
-Researches creative angles for a product, turns a selected angle into a campaign
-concept, and produces two coordinated image ads plus a short video — all from one
-shared creative specification.
+# 🎬 AI Campaign Creative Studio
 
-Built for the Beast Life AI & Engineering assignment.
+**One product brief in. A researched campaign out — two image ads and a video that actually match.**
 
-**What it is in one sentence:** a pipeline with saved state between every stage,
-so any stage can fail, be retried, or survive a restart without losing the work
-that already succeeded.
+![Python](https://img.shields.io/badge/Python_3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)
+
+</div>
+
+---
+
+## What it is
+
+You describe a product. A research agent goes out and reads real pages — not its own memory — and comes back with three creative angles, each cited. You pick one. From that single choice the app writes one creative specification, and every asset after it is generated from that one spec: a square ad, a vertical ad, and an eight-second video.
+
+That last part is the whole point. Two text-to-image calls give you two unrelated pictures. Here one master scene is generated, then handed back to the model to be reframed, so the product, the lighting and the props survive the format change. The headline is never drawn by the image model at all — Pillow renders it, so the copy on the video is the same code, the same font and the same spelling as the copy on the ads.
+
+Every stage writes its state to disk before the next one starts. Kill the backend mid-render and completed work is still there when it comes back up.
+
+## Highlights
+
+- 🔍 **Grounded research** — a bounded agent with three actions, real sources, recorded tool calls and access times
+- 🚫 **No invented statistics** — every number in the copy is checked against the retrieved pages and flagged if it is not there
+- 🎨 **One spec, every asset** — master scene → reframed per format, so the formats cannot drift apart
+- ✍️ **Deterministic type** — Pillow draws the copy, so the headline is exactly what was approved
+- 🎞️ **Video from the approved scene** — three rendered frames, animated by FFmpeg, no second generation
+- 💾 **Crash-safe** — state persists per stage; a restart marks orphaned work and retry never redoes what succeeded
+- 🔒 **Untrusted pages stay untrusted** — the agent's only possible outputs are three whitelisted actions
+
+## A look inside
+
+<div align="center">
+
+**The same campaign in both formats — a reframe, not a regeneration**
+
+<img src="sample-campaign/image_1x1.png" width="360" alt="1:1 ad"> <img src="sample-campaign/image_9x16.png" width="203" alt="9:16 ad">
+
+**The master scene both formats were derived from**
+
+<img src="sample-campaign/master-scene.png" width="480" alt="Master scene">
+
+</div>
+
+The eight-second video is committed too: [`sample-campaign/campaign.mp4`](sample-campaign/campaign.mp4), alongside the full run record in [`campaign.json`](sample-campaign/campaign.json) — research trace, sources, spec, prompts and cost.
+
+## The flow
 
 ```
 Product brief → Research agent → 3 creative angles → User selects 1
               → Shared creative spec → 2 image formats + 1 video
 ```
+
+**In one sentence:** a pipeline with saved state between every stage, so any stage
+can fail, be retried, or survive a restart without losing the work that already
+succeeded.
+
+## Built with
+
+Python 3.14 · FastAPI · Pydantic · SQLite · Pillow · FFmpeg · React · Vite
+
+Seven backend dependencies, two on the frontend. No agent framework, no task queue, no ORM — [and here is why](#decisions).
+
+<sub>Built for the Beast Life AI & Engineering assignment. Everything below is the engineering record: how to run it, how it is built, what was decided, and what is not finished.</sub>
 
 ---
 
@@ -86,6 +138,19 @@ retry, cropping and the text overlays all execute for real. The generated
 [`sample-campaign/`](sample-campaign/) for what the same code produces live. The UI displays a **FIXTURE
 MODE** banner whenever this is on, and fixture research is never presented as
 live browsing.
+
+**One thing to expect here.** The video stage may fail its first attempt in
+fixture mode with `StageTimeout: the 'video' stage exceeded its 180s limit`.
+**Click Retry on that stage — it then succeeds in about 11 seconds.**
+
+This is an artefact of fixture mode, not of the video pipeline. With no network
+calls, research, spec and images all complete within the same second, so FFmpeg
+starts while Pillow is still writing four full-size PNGs and the two contend for
+the same cores. Against live providers the stages are separated by network waits
+and the same render takes 11s (measured; FFmpeg alone is ~9s). The bound is
+doing its job — it stops a stage that is genuinely over its limit — and the
+retry path is the intended recovery, so this is left as-is and documented rather
+than papered over by raising the timeout only for fixture runs.
 
 ### Tests
 
@@ -604,6 +669,12 @@ Stated plainly rather than implied:
 - **Injection detection is regex over known phrasings** and is trivially evadable.
   It is not the security boundary — the action whitelist is. Detection exists for
   observability.
+- **In fixture mode the video stage can time out on its first attempt** and
+  succeed on retry. With every provider call canned, the three upstream stages
+  finish inside one second, so FFmpeg starts while Pillow is still writing the
+  video's four source layers and the two contend for CPU. Live, the same render
+  takes 11s. Retry is the recovery path and it works; see
+  [Fixture mode](#fixture-mode--run-it-with-no-api-keys).
 - **No deployment.** The app runs locally; there is no hosted URL.
 - **No reference packshot input.** Every scene is generated from the spec's text
   description. Feeding a real product photo in as an image input would pin the

@@ -13,6 +13,8 @@ venv/
 # Database + generated artifacts (regenerable, and large)
 backend/data/*.db
 backend/data/*.db-journal
+backend/data/*.db-wal
+backend/data/*.db-shm
 backend/data/artifacts/
 
 # Node
@@ -31,6 +33,10 @@ Beast_Life_AI_Engineering_Assignment.pdf
 # Stray generated previews at the repo root
 /image_*.png
 /*.mp4
+/*.mov
+
+# Demo recording stills — sent with the submission email, not committed
+.demo_shots/
 
 # Assets downloaded by verify_campaign.py --api
 .verify_downloads/
