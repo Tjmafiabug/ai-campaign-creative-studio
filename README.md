@@ -90,12 +90,44 @@ live browsing.
 
 ```bash
 cd backend
-./run_tests.sh           # 27 tests, ~3s, no network calls
+./run_tests.sh           # 28 tests, ~3s, no network calls
 ```
 
 Covers the three areas the assignment names — input/schema validation, one
 failure-and-retry path, and reuse of successful stage outputs — plus the agent
 safety checks.
+
+### Verify one complete campaign
+
+```bash
+python3 verify_campaign.py
+```
+
+Checks the committed sample campaign against the acceptance criteria and prints
+one line per check. No keys, no network, no backend, no dependencies beyond the
+standard library — a reviewer can run it immediately after cloning. Exit code is
+0 only if every check passes.
+
+```
+  PASS  source links: at least 3 pages cited            6 source URLs (minimum 3)
+  PASS  image_1x1: exactly 1080x1080                    1080x1080
+  PASS  image_9x16: exactly 1080x1920                   1080x1920
+  PASS  video: 6-10 seconds                             8.00s
+  PASS  video: exactly 1080x1920                        1080x1920
+  ...
+  All 16 checks passed (1 skipped)
+```
+
+To verify a campaign generated on this machine — including that it survives a
+restart — start the backend, run a campaign, restart the backend, then:
+
+```bash
+python3 verify_campaign.py --api http://localhost:8000 --campaign <campaign-id>
+```
+
+That form downloads every asset back through the HTTP API rather than reading
+files off disk, so it verifies the artifacts are genuinely downloadable, and it
+runs the history check that the offline form skips.
 
 ### Reproduce a failure and a retry
 
@@ -507,7 +539,7 @@ backend/
     orchestrator.py  stage running, dependencies, retry
     main.py          FastAPI endpoints
   assets/            bundled OFL fonts
-  tests/             27 tests
+  tests/             28 tests
 frontend/
   src/App.jsx        the whole UI
   src/api.js         backend client

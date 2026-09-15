@@ -32,6 +32,9 @@ Beast_Life_AI_Engineering_Assignment.pdf
 /image_*.png
 /*.mp4
 
+# Assets downloaded by verify_campaign.py --api
+.verify_downloads/
+
 # Personal interview prep — not part of the submission
 INTERVIEW_PREP.md
 DEMO_SCRIPT.md
